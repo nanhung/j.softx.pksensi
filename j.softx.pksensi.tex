@@ -67,26 +67,53 @@
 %% \address{Address\fnref{label3}}
 %% \fntext[label3]{}
 
-\title{Title/Name of your software}
+\title{pksensi: an R Package to Apply Global Sensitivity Analysis in
+Physiologically Based Kinetic Modeling}
 
 %% use optional labels to link authors explicitly to addresses:
 %% \author[label1,label2]{}
 %% \address[label1]{}
 %% \address[label2]{}
 
-\author{A. Author}
+\author[1]{Nan-Hung Hsieh}
+\author[2]{Brad Reisfeld}
+\author[1]{Weihsueh A. Chiu}
 
-\address{Your institute, some address}
+\address[1]{
+Veterinary Integrative Biosciences, College of Veterinary Medicine and
+Biomedical Sciences, Texas A\&M University, College Station, TX, USA\\
+}
+\address[2]{
+Chemical and Biological Engineering and School of Biomedical
+Engineering, Colorado State University, Fort Collins, CO, USA\\
+}
+
 
 \begin{abstract}
 %% Text of abstract 
-Ca. 100 words
+Sensitivity analysis (SA) is an essential tool for modelers to understand the influence of model parameters on model outputs. 
+It is also increasingly used in developing and assessing pharmacokinetic models.
+We developed an R package, named pksensi, to make global
+sensitivity analysis more accessible in physiologically based
+kinetic modeling. This package can investigate both parameter
+uncertainty and sensitivity in pharmacokinetic models, including those
+with multivariate model outputs, such as multiple time-points and tissue
+compartments. We refined the extended Fourier Amplitude Sensitivity Test
+method for SA by adding a random phase-shift to analyze the statistical
+variability of the sensitivity index for each model parameter.
+Furthermore, it includes functions to check the convergence of the
+global SA results. Utilizing this package, we successfully
+reproduced our previously published SA results of human physiologically
+based pharmacokinetic modeling for acetaminophen and its two primary
+metabolites. Overall, pksensi improves the user experience of
+performing global SA and can create robust and reproducible results for
+decision making in pharmacokinetic model calibration.
 
 \end{abstract}
 
 \begin{keyword}
 %% keywords here, in the form: keyword \sep keyword
-keyword 1 \sep keyword 2 \sep keyword 3
+Global sensitivity analysis \sep  physiologically based kinetic modeling \sep Parameter fixing \sep R package
 
 %% PACS codes here, in the form: \PACS code \sep code
 
@@ -153,16 +180,10 @@ Documentation in the repository in a docs/ directory, and/or READMEs, as appropr
 
 \section{Motivation and significance}
 \label{}
-
-Introduce the scientific background and the motivation for developing the software.
-
-Explain why the software is important, and describe the exact (scientific) problem(s) it solves.
-
-Indicate in what way the software has contributed (or how it will contribute in the future) to the process of scientific discovery; if available, this is to be supported by citing a research paper using the software.
-
-Provide a description of the experimental setting (how does the user use the software?).
-
-Introduce related work in literature (cite or list algorithms used, other software etc.).
+Sensitivity analysis (SA) is a mathematical technique to investigate how
+variations in model parameters affect model outputs. An increasing
+number of studies use SA to determine which model parameters contribute
+to high variation in model predictions \cite{ferretti2016trends}. 
 
 
 \section{Software description}
@@ -242,16 +263,11 @@ Optionally thank people and institutes you need to acknowledge.
 %% else use the following coding to input the bibitems directly in the
 %% TeX file.
 
-\begin{thebibliography}{00}
 
 
-%% \bibitem{label}
-%% Text of bibliographic item
+\bibliographystyle{elsarticle-num} 
+\bibliography{mybibfile}
 
-\bibitem{}
-
-\end{thebibliography}
-Please add the reference to the software repository if DOI for software  is available. 
 
 \section*{Current executable software version}
 \label{}
