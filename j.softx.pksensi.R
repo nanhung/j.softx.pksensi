@@ -39,5 +39,5 @@ x <- rfast99(params, n = 200, q = q, q.arg = q.arg, replicate = 10)
 out <- solve_fun(x, time = t, func = pbtk1cpt, initState = initState, outnames = outputs)
 
 # Step 5. Check result
-plot(out)   # Visualize result
 check(out)  # Print result to console
+plot(out)   # Visualize result
