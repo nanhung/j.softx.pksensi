@@ -136,7 +136,7 @@ decision making in pharmacokinetic model calibration.
 
 \begin{keyword}
 %% keywords here, in the form: keyword \sep keyword
-Global sensitivity analysis \sep  physiologically based kinetic modeling \sep Parameter fixing \sep R package
+Global sensitivity analysis \sep  physiologically based kinetic modeling 
 
 %% PACS codes here, in the form: \PACS code \sep code
 
@@ -197,8 +197,6 @@ Source code in a src/ directory, not the root of the repository.
 Tag corresponding with the version of the software that is reviewed.
 
 Documentation in the repository in a docs/ directory, and/or READMEs, as appropriate.
-
-
 
 
 \section{Motivation and significance}
@@ -267,7 +265,7 @@ for dynamic models \cite{JSSv033i03}. It can also conduct collinearity
 and identifiability analysis to evaluate which model parameters can
 estimate or exclude based on available observation data. The
 multisensi package provides SA for models with multivariate
-output \cite{R-multisensi}. ODEsensitivity can perform SA in
+output \cite{R-multisensi}. ODEsensitivity packages can perform SA in
 ordinary differential equation (ODE) models \cite{R-ODEsensitivity}. It
 utilizes the ODE interface from the deSolve package and
 connect it with the SA from the sensitivity package. Other
@@ -420,92 +418,14 @@ investigation and communication of results in decision support.
 \section{Illustrative Examples}
 \label{}
 
-Two PK models will apply to demonstrate how
+We currently proposed two example models to demonstrate how
 \textbf{pksensi} works. The first one is a generic model, and the
-second is a chemical-specific model.
+second is a chemical-specific model. 
+Users can refer to online documentation and user manuals in 
+the CRAN (\url{https://cran.r-project.org/web/packages/pksensi/index.html}) or 
+\textbf{pksensi} website (\url{https://nanhung.rbind.io/pksensi/}) for the detailed usage examples.
 
-\subsection{Equations}
-\label{equations}
-
-In the first example, we use a generic, one-compartment PK model from
-httk package \cite{JSSv079i04} to demonstrate how
-\textbf{pksensi} can apply to PK studies. The differential equations
-for this model is as,
-
-\[\frac{dA_{gutlumen}}{dt} = -k_{gutabs} \cdot A_{gutlumen} + g(t)\]
-\[\frac{dA_{rest}}{dt} = k_{gutabs} \cdot A_{gutlumen}-k_{elim} \cdot A_{rest}\]
-
-where \(A_{gutlumen}\) is the state variable that describes the quantity
-of compound in the gut lumen (mg) and \(A_{rest}\) is the quantity of
-compound in rest of body and blood (mg). The parameter \(k_{gutabs}\) is
-the absorption rate constant that describes the chemical absorption from
-the gut lumen into gut tissue through first-order processes (/h) and
-\(k_{elim}\) is the elimination rate constant (/h), which is equal to
-the total clearance divided by the volume of distribution. The
-time-dependent function \(g(t)\) is used to describe the oral dosing
-schedule.
-
-The concentration of the chemical in the rest of body and blood
-(\(C_{rest}\), mg/L) can calculate as,
-
-\[ C_{rest} = A_{rest} / V_{dist} \cdot BW\]
-
-where \(V_{dist}\) is the volume of distribution (L/kg BW) and \(BW\) is
-the body weight (kg). \(C_{rest}\) can also represent as the chemical
-concentration in plasma that can be further used to compare with
-observed results in a PK experiment. The bioavailability is assumed to
-be 100\% in this model.
-
-To start, we implemented the one-compartment PK model in R. The
-\textbf{pksensi} allows users select the preferred method to solve the
-PK model, either with the deSolve package or with GNU MCSim
-through the compile function. This section mainly focuses on how to
-conduct global SA with deSolve package with pure R
-environment.
-
-
-The one-compartment PK model can describe the quantity of compound in
-the gut lumen (\(Agutlument\)) and the rest of body
-(\(Agutlument\).) The \(Ametabolized\) is the quantity of
-compound transform and metabolize through hepatic clearance.
-
-\begin{lstlisting}
-pbtk1cpt <- function(t, state, parameters) {
-  with(as.list(c(state, parameters)), {
-    dAgutlument = - kgutabs * Agutlument
-    dAcompartment = kgutabs * Agutlument - ke * Acompartment
-    dAmetabolized = ke * Acompartment
-    Ccompartment = Acompartment / vdist * BW;
-    list(c(dAgutlument, dAcompartment, dAmetabolized), 
-         "Ccompartment" = Ccompartment) 
-  })
-}
-\end{lstlisting}
-
-The parameter values and initial states need to be assigned to specific
-values before simulation. Here, we use the corresponding parameter value
-of acetaminophen (APAP) in this example. These model parameters are
-derived from the \emph{in-vivo} or \emph{in-vitro} experiment results.
-The parameter value can be generated from \(parameterize\_1comp\)
-function in httk package as:
-
-\begin{lstlisting}
-library(httk)
-pars1comp <- (parameterize_1comp(chem.name = "acetaminophen"))
-initState <- c(Agutlument = 10, Acompartment = 0, Ametabolized = 0)
-\end{lstlisting}
-
-The given value of \(vdist\), \(ke\), and \(kgutabs\) in httk are 1.1 (L/kg BW), 0.23 (/h), and 2.18 (/h),
-respectively. The body weight is assumed to be 70 (kg). 
-In addition, the initial state condition (\(initState\)) need to specify in model solving.
-
-
-
-
-
-
-
-\section{Impact}
+\section{Impact and conclusions}
 \label{}
 
 We initiated \textbf{pksensi} in order to facilitate a comprehensive
@@ -520,6 +440,8 @@ rarely addressed in most global SA studies and software packages. We
 also developed functions to visualize the output results and help
 distinguish the ``influential'' and ``non-influential'' parameters that
 can be applied in parameter fixing in the model calibration. 
+Our package make global sensitivity analysis more accessible in physiologically based
+kinetic modeling.
 
 We chose to integrate sensitivity analysis with GNU MCSim because it is
 a powerful open-source software package for dynamical simulation of
@@ -533,12 +455,10 @@ functions to install and link with GNU MCSim, conducting the uncertainty
 and SA in PK modeling, the overall learning curve of this workflow might
 steep for users that are not familiar with GNU MCSim from model
 development, debugging, and testing. Therefore, the general package,
-such as deSolve, can be an alternative option for R users. It addition,
-\textbf{pksensi} also has potential to be performed in interactive PBPK
+such as deSolve, can be an alternative option for R users.
+The flexibility of our package can help modelers quantify the influence of model parameters on model outputs.
+It addition, \textbf{pksensi} also has potential to be performed in interactive PBPK
 modeling platform that was mentioned in rencent study \cite{li2019integration}.
-
-\section{Conclusions}
-\label{}
 
 Overall, \textbf{pksensi} provides comprehensive suite of features and
 functions for performing global SA for PK models and can create robust
@@ -550,7 +470,7 @@ parameters.
 
 \section{Conflict of Interest}
 
-We wish to confirm that there are no known conflicts of interest associated with this publication and there has been no significant financial support for this work that could have influenced its outcome.
+The authors declare that they have no known competing financial interests or personal relationships that could have appeared to influence the work reported in this paper.
 
 \section*{Acknowledgements}
 \label{}
