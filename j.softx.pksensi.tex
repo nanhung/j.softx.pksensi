@@ -37,6 +37,29 @@
 %% \begin{linenumbers}, end it with \end{linenumbers}. Or switch it on
 %% for the whole article with \linenumbers.
 \usepackage{lineno}
+\usepackage{hyperref}
+\usepackage{listings}
+
+\lstset{ 
+  language=R,                     % the language of the code
+  basicstyle=\tiny\ttfamily, % the size of the fonts that are used for the code
+  backgroundcolor=\color{white},  % choose the background color. You must add \usepackage{color}
+  showspaces=false,               % show spaces adding particular underscores
+  showstringspaces=false,         % underline spaces within strings
+  showtabs=false,                 % show tabs within strings adding particular underscores
+  frame=single,                   % adds a frame around the code
+  rulecolor=\color{black},        % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. commens (green here))
+  tabsize=2,                      % sets default tabsize to 2 spaces
+  captionpos=b,                   % sets the caption-position to bottom
+  breaklines=true,                % sets automatic line breaking
+  breakatwhitespace=false,        % sets if automatic breaks should only happen at whitespace
+  keywordstyle=\color{RoyalBlue},     % keyword style
+  commentstyle=\color{YellowGreen},   % comment style
+  stringstyle=\color{ForestGreen}     % string literal style
+} 
+
+
+\usepackage[usenames,dvipsnames]{color}    
 
 \usepackage{float}
 \restylefloat{table}
@@ -93,7 +116,7 @@ Engineering, Colorado State University, Fort Collins, CO, USA\\
 %% Text of abstract 
 Sensitivity analysis (SA) is an essential tool for modelers to understand the influence of model parameters on model outputs. 
 It is also increasingly used in developing and assessing pharmacokinetic models.
-We developed an R package, named pksensi, to make global
+We developed an R package, named \textbf{pksensi}, to make global
 sensitivity analysis more accessible in physiologically based
 kinetic modeling. This package can investigate both parameter
 uncertainty and sensitivity in pharmacokinetic models, including those
@@ -105,7 +128,7 @@ Furthermore, it includes functions to check the convergence of the
 global SA results. Utilizing this package, we successfully
 reproduced our previously published SA results of human physiologically
 based pharmacokinetic modeling for acetaminophen and its two primary
-metabolites. Overall, pksensi improves the user experience of
+metabolites. Overall, \textbf{pksensi} improves the user experience of
 performing global SA and can create robust and reproducible results for
 decision making in pharmacokinetic model calibration.
 
@@ -259,34 +282,130 @@ inadequate size of the sample number. However, there are no software
 packages that provide the available tools in the assessment of
 reliability. In addition, the existing eFAST function does not include
 the feature to generate the random sampling curve. We present here an
-package, called pksensi, which is designed to make SA more
+package, called \textbf{pksensi}, which is designed to make SA more
 accessible and reproducible in pharmacological and toxicological
-researches. This package can investigate both parameter uncertainty and
-sensitivity in PK model with multivariate model outputs. Moreover, it
-seamlessly integrates with both general ODE solvers available in R or as
-external C code, as well as the GNU MCSim software used for conducting
-sophisticated PK modeling, including MCMC. The analytical framework in
-pksensi includes not only global SA but also the uncertainty
-analysis and diagnostic tools to support the modeling process.
-
+researches. 
 
 \section{Software description}
 \label{}
 
-Describe the software in as much as is necessary to establish a vocabulary needed to explain its impact. 
+Our package can investigate both parameter uncertainty and
+sensitivity in PK model with multivariate model outputs. Moreover, it
+seamlessly integrates with both general ODE solvers available in R or as
+external C code, as well as the GNU MCSim software used for conducting
+sophisticated PK modeling, including MCMC. The analytical framework in
+\textbf{pksensi} includes not only global SA but also the uncertainty
+analysis and diagnostic tools to support the modeling process.
 
-\subsection{Software Architecture}
-\label{}
+\subsection{Installation}
+\label{installation}
 
-Give a short overview of the overall software architecture; provide a pictorial component overview or similar (if possible). If necessary provide implementation details.
+This package can link with R deSolve package,
+which includes a comprehensive integrator to solve ODE. The GNU MCSim
+can be installed by following the instruction in GNU MCSim's manual on
+\url{https://www.gnu.org/software/mcsim/mcsim.html} or using the
+built-in \textbf{\textit{mcsim\_install()}} function in \textbf{pksensi}. The C
+compiler is already available in Linux or MacOS. The Windows user can
+install Rtools and set the working path of compiler before using this
+function as:
 
-\subsection{Software Functionalities}
-\label{}
+\begin{lstlisting}
+Rtools.path <- "c:/Rtools/bin; c:/Rtools/mingw_64/bin"
+Sys.setenv(PATH = paste(Rtools.path, Sys.getenv("PATH"), sep=";"))
+\end{lstlisting}
 
-Present the major functionalities of the software.
 
-\subsection{Sample code snippets analysis (optional)}
-\label{}
+\subsection{Parameter matrix generation}
+\label{parameter-matrix-generation}
+
+We adopted eFAST, the widely used analysis of variance (ANOVA)-like
+global SA approach to decompose the variance to partial variances for
+multidimensional parameters in numerical models in this package. Most of
+the available eFAST functions, such as the algorithm to generate the
+parameter space and to set the sampling frequency, were sourced from the
+R sensitivity package \cite{R-sensitivity}. The eFAST method
+computes the sensitivity index (SI) via ANOVA-like decomposition of the
+function for analysis. This type of global SA approach and SI also know
+as Sobol' method and Sobol' index. Since the estimated SI is not stable
+(high variation) when using smaller sample size, we included a random
+phase-shift approach to conduct replicating sampling from random
+starting points across parameter space to test the convergence and
+robustness of the sensitivity measurement. Considering the model that is
+built under \(y=f(x_{i})\). The sampling scheme can describe as,
+
+\[ x_i = \frac{1}{2} + \frac{1}{\pi}\arcsin(\sin(\omega_is + \varphi_i)) \]
+
+
+where \(x_i\) is the nominal value of the \(i\)-th parameter, and
+\(\omega_i\) is a vector giving the set of frequencies, one frequency
+for each parameter, and \(\varphi\) is a random phase-shift coefficient
+ranged from 0 to \(2\pi\). Through the random
+phase-shift, the robust result of the sensitivity measurement should be
+similar across each replication under the same sample size. For most
+Sobol'-based SA algorithms, the larger sample size is needed to reduce
+the probability of having negative estimates. However, FAST estimates
+are always positive according to its construction.
+
+To investigate the convergence of SI, we adopted the ``exam'' approach that
+proposed previously \cite{sarrazin2016global}. This method quantitatively
+assesses convergence by computing the width of 95\% confidence intervals
+of computed SI for all parameters across all time-points and output
+variables. Through random phase-shift procedure, the replicated SI
+values can repeatedly sample independently. Therefore, they can be used
+to investigate the convergence of SI as,
+
+\[CI_{i,t} = max(SI_{i,t}^{ub}-SI_{i,t}^{lb})\]
+
+where \(SI_{i,t}^{ub}\) and \(SI_{i,t}^{ub}\) are the upper and lower
+bound of the SI from the specific model output (\(i\)) at time (\(t\)).
+\(CI_{i,t}\) is the corresponding convergence index.
+
+To integrate the random phase-shift with eFAST, we built the
+\textbf{\textit{rfast99()}} function, which can be used to perform the sensitivity
+test for the whole modeling process. The function can sample and generate the testing parameter matrix
+based on a given argument of sample size \(n\) and probability
+distribution (e.g., mean/s.d. of normal distribution, meanlog/sdlog of
+log-normal distribution, and minimum/maximum of uniform distribution).
+The number of model evaluations is equal to the sample size times the
+number of model parameters.
+
+\subsection{Modeling}\label{modeling}
+
+The \textbf{pksensi} provides a useful function to solve ODEs
+in PK models using analytical and numerical approaches. The solution can
+perform under the pure R programming environment by linking
+with R deSolve package \cite{JSSv033i09}.
+However, the most efficient way to achieve high computational speed is
+through compiled, lower-level languages, such as FORTRAN, C, or C++. 
+Therefore, it includes a function to compile and create
+dynamic-link libraries (.dll) on Windows and shared objects (.so) on
+Unix-liked systems (e.g., Linux and MacOS). This compiled program can
+load and execute through the build-in function in R. However, Windows
+users need to install Rtools to compile the source code by using the GNU
+GCC compiler. The C implementation of the example model can be found as
+an example within GNU MCSim \cite{bois2009gnu}. The \textbf{pksensi}
+can also link with GNU MCSim to create the model program, used in
+solving each system of equations.
+
+The uncertainty analysis is a crucial modeling process within SA.
+Sometimes, it is difficult to have informative data to set up the
+parameter distribution. A wider range for a parameter distribution might
+cause a numerical error at extreme values. On the other hand, narrower
+ranges might cause the incorrect calibrated result of the model
+parameter. The uncertainty analysis using Monte Carlo is an appropriate
+approach in the data-driven modeling process to address this problem.
+Before fitting the data to model, the Monte Carlo can be applied with
+the given distribution of model parameter to examine whether the
+experimental data are within the range of the distribution of model
+output. The \textbf{pksensi} also has a function that can link to GNU MCSim
+to conduct Monte Carlo analysis, which is built-into GNU MCSim and
+examine the simulation result. The general workflow of uncertainty and
+SA is illustrated in Figure \ref{fig:workflow}.
+
+\begin{figure}
+\includegraphics[width=1\linewidth]{workflow} \caption{\label{fig:workflow}Workflow for performing uncertainty and sensitivity analysis.}\label{fig:workflow}
+\end{figure}
+
 
 \section{Illustrative Examples}
 \label{}
