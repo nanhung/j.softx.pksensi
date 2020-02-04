@@ -183,7 +183,91 @@ Documentation in the repository in a docs/ directory, and/or READMEs, as appropr
 Sensitivity analysis (SA) is a mathematical technique to investigate how
 variations in model parameters affect model outputs. An increasing
 number of studies use SA to determine which model parameters contribute
-to high variation in model predictions \cite{ferretti2016trends}. 
+to high variation in model predictions \cite{ferretti2016trends}. This
+technique has also been applied in pharmacology and toxicology research
+\cite{loizou2015application, mcnally2012reconstruction}.
+Pharmacokinetic (PK) models describe the changes in the concentrations
+or amounts of a substance in the body over time (the various terms for
+the kinetic models, including ``pharmacokinetic'', ``toxicokinetic'',
+and ``biokinetic'' models, are used exchangeably here). The goal of SA
+in PK research is to examine the sensitivity of output variables, such
+as chemical concentration in blood or tissues, with respect to input
+parameters, such as anatomical, physiological, and kinetic constants
+\cite{mcnally2011workflow}. In addition, this SA approach can guide
+experimental design and the parameter estimation processes
+\cite{zhang2015sobol}. For instance, SA can identify ``unidentifiable''
+parameters that can lead to problems with numerical procedures used in
+parameter estimation \cite{chu2010quantitative}. It can be further
+applied to parameter prioritization and parameter fixing before model
+calibration \cite{fphar201800588}.
+
+In our earlier work \cite{fphar201800588}, we developed an updated
+workflow to apply global SA to reduce the computational burden in the
+Bayesian, Markov Chain Monte Carlo (MCMC)-based calibration process of a
+physiologically based pharmacokinetic (PBPK) model. We used GNU MCSim
+\cite{bois2009gnu}, an effective simulation package for Bayesian
+population PBPK modeling, to calibrate the model. We found that the
+extended Fourier Amplitude Sensitivity Test (eFAST), a type of
+variance-based global SA algorithm, had the best balance of efficiency
+and accuracy for a sophisticated, multi-compartment, multi-dataset, and
+multi-metabolite PBPK model. This method was first introduced in 1973, 
+\cite{cukier1973study} in a study of the sensitivity of coupled reaction systems
+that are constructed by differential equations with the numerous rate
+coefficients (the classic FAST method with the first-order
+effect only). It then evolved to estimate the Sobol' sensitivity measure
+(the eFAST method with first- and
+total-order effects) \cite{saltelli1999quantitative}. The FAST algorithm creates the multidimensional
+space of input parameters through a ``search-curve''. It is more
+computationally efficient in calculating the influence of model
+parameter than other global SA methods such as the Monte Carlo based
+approaches \cite{jansen1999analysis, owen2013better}. Our previous work
+also found some efficient visualization approaches that can be used to
+distinguish between ``influential'' and ``non-influential'' parameters.
+This approach addresses common identifiability issues of PBPK model
+parameter that increase the computational burden of Bayesian analysis
+\cite{garcia2015identifiability}, and therefore reduce the
+computational efficiency. We also developed approaches for communicating
+parameter sensitivity in decision making.
+
+There are numerous developed packages, such as sensitivity
+\cite{R-sensitivity}, which is a practical tool to conduct local and
+global SA. The sensitivity package includes some functions to
+generate the parameter sequences by using different computing
+algorithms. Also, it provides a feasible way to integrate external
+modeling results. This computational approach can effectively solve the
+heavy computing burden of numerical solutions within the pure R
+environment. Several other R packages, such as FME,
+multisensi, and ODEsensitivity include SA tools and
+are freely available in the Comprehensive R Archive Network (CRAN). The
+FME package contains a basic method for performing local SA
+for dynamic models \cite{JSSv033i03}. It can also conduct collinearity
+and identifiability analysis to evaluate which model parameters can
+estimate or exclude based on available observation data. The
+multisensi package provides SA for models with multivariate
+output \cite{R-multisensi}. ODEsensitivity can perform SA in
+ordinary differential equation (ODE) models \cite{R-ODEsensitivity}. It
+utilizes the ODE interface from the deSolve package and
+connect it with the SA from the sensitivity package. Other
+related packages such as mtk \cite{RJ-2015-031} and
+fast \cite{R-fast} are designed to investigate the importance
+of model parameter.
+
+Although these tools provide various approaches to perform SA, they each
+individually have limitations for application to PK modeling. For
+example, the estimated index in SA is not robust when using the
+inadequate size of the sample number. However, there are no software
+packages that provide the available tools in the assessment of
+reliability. In addition, the existing eFAST function does not include
+the feature to generate the random sampling curve. We present here an
+package, called pksensi, which is designed to make SA more
+accessible and reproducible in pharmacological and toxicological
+researches. This package can investigate both parameter uncertainty and
+sensitivity in PK model with multivariate model outputs. Moreover, it
+seamlessly integrates with both general ODE solvers available in R or as
+external C code, as well as the GNU MCSim software used for conducting
+sophisticated PK modeling, including MCMC. The analytical framework in
+pksensi includes not only global SA but also the uncertainty
+analysis and diagnostic tools to support the modeling process.
 
 
 \section{Software description}
@@ -266,7 +350,7 @@ Optionally thank people and institutes you need to acknowledge.
 
 
 \bibliographystyle{elsarticle-num} 
-\bibliography{mybibfile}
+\bibliography{j.softx.pksensi}
 
 
 \section*{Current executable software version}
