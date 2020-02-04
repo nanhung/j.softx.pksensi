@@ -100,7 +100,9 @@ Physiologically Based Kinetic Modeling}
 
 \author[1]{Nan-Hung Hsieh}
 \author[2]{Brad Reisfeld}
-\author[1]{Weihsueh A. Chiu}
+\author[1]{Weihsueh A. Chiu\corref{cor}}
+\ead{wchiu@cvm.tamu.edu}
+\cortext[cor]{Corresponding author}
 
 \address[1]{
 Veterinary Integrative Biosciences, College of Veterinary Medicine and
@@ -125,10 +127,7 @@ compartments. We refined the extended Fourier Amplitude Sensitivity Test
 method for SA by adding a random phase-shift to analyze the statistical
 variability of the sensitivity index for each model parameter.
 Furthermore, it includes functions to check the convergence of the
-global SA results. Utilizing this package, we successfully
-reproduced our previously published SA results of human physiologically
-based pharmacokinetic modeling for acetaminophen and its two primary
-metabolites. Overall, \textbf{pksensi} improves the user experience of
+global SA results. Overall, \textbf{pksensi} improves the user experience of
 performing global SA and can create robust and reproducible results for
 decision making in pharmacokinetic model calibration.
 
@@ -388,12 +387,7 @@ the given distribution of model parameter to examine whether the
 experimental data are within the range of the distribution of model
 output. The \textbf{pksensi} also has a function that can link to GNU MCSim
 to conduct Monte Carlo analysis, which is built-into GNU MCSim and
-examine the simulation result. The general workflow of uncertainty and
-SA is illustrated in Figure \ref{fig:workflow}.
-
-\begin{figure}
-\includegraphics[width=1\linewidth]{workflow} \caption{\label{fig:workflow}Workflow for performing uncertainty and sensitivity analysis.}\label{fig:workflow}
-\end{figure}
+examine the simulation result. 
 
 \subsection{Output visualization and decision
 support}\label{output-visualization-and-decision-support}
@@ -418,15 +412,32 @@ investigation and communication of results in decision support.
 \section{Illustrative Examples}
 \label{}
 
-We currently proposed two example models to demonstrate how
-\textbf{pksensi} works. The first one is a generic model, and the
-second is a chemical-specific model. 
-Users can refer to online documentation and user manuals in 
-the CRAN (\url{https://cran.r-project.org/web/packages/pksensi/index.html}) or 
-\textbf{pksensi} website (\url{https://nanhung.rbind.io/pksensi/}) for the detailed usage examples.
+We currently proposed two example models to illustrate using \textbf{pksensi} in PK modeling. 
+In the first example, we used a generic, one-compartment model from
+httk package \cite{JSSv079i04} to explain the overall workflow and the details in the simulation process. 
+The second example used acetaminophen (APAP)-PBPK model, a complex model with multiple compartments, to demonstare the reproducibility of our previous publication \cite{fphar201800588} and the capability of \textbf{pksensi}. The APAP-PBPK model describes the pharmacokinetics of parent APAP and its two metabolites glucuronide and sulfate. The model code is included in this package and can be generated through \textbf{\textit{pbpk\_apap\_model()}} function.
+Users can refer to online vignettes and user manual in 
+the CRAN (\url{https://cran.r-project.org/web/packages/pksensi/index.html}) or the
+\textbf{pksensi} website (\url{https://nanhung.rbind.io/pksensi/}) for the detailed usage examples. 
+The general workflow of uncertainty and
+SA in \textbf{pksensi} is illustrated in Figure \ref{fig:workflow}.
+
+\begin{figure}
+\includegraphics[width=1\linewidth]{workflow} \caption{\label{fig:workflow}Workflow for performing uncertainty and sensitivity analysis.}\label{fig:workflow}
+\end{figure}
+
+
 
 \section{Impact and conclusions}
 \label{}
+
+Computational modeling has become an essential technique in modern 
+scientific research to support hypotheses, experiments, and discoveries. 
+Uncertainty and SA are essential tools for modelers in the conduct of model 
+development and examination. 
+Several packages on the CRAN repository and other software platforms had been
+built to perform global SA with a variety of algorithms, but none have included 
+integration with ODE-based models, such as PK models. 
 
 We initiated \textbf{pksensi} in order to facilitate a comprehensive
 and efficient global SA workflow in PK modeling, filling a crucial gap
@@ -456,9 +467,20 @@ and SA in PK modeling, the overall learning curve of this workflow might
 steep for users that are not familiar with GNU MCSim from model
 development, debugging, and testing. Therefore, the general package,
 such as deSolve, can be an alternative option for R users.
-The flexibility of our package can help modelers quantify the influence of model parameters on model outputs.
+The flexibility of our package can help modelers quantify the influence of
+model parameters on model outputs.
 It addition, \textbf{pksensi} also has potential to be performed in interactive PBPK
 modeling platform that was mentioned in rencent study \cite{li2019integration}.
+
+It is worth noting that the current global SA results are conditional on the 
+specific model and the given range of the model parameters. 
+Other factors, such as the number of parameters examined, 
+the parameter distributions/ranges, and the given dosing level in PK model 
+might also have a potential impact on the level of importance of each parameter, 
+but these "meta-uncertainties" are not currently addressed. Complex models with 
+high paremeter dimensionality are also challenging in global SA as they have 
+higher computer demands. As approaches are developed to address these complexities, 
+we hope to incorporate them into \textbf{pksensi}.
 
 Overall, \textbf{pksensi} provides comprehensive suite of features and
 functions for performing global SA for PK models and can create robust
