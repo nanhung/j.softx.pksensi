@@ -415,7 +415,7 @@ investigation and communication of results in decision support.
 We currently proposed two example models to illustrate using \textbf{pksensi} in PK modeling. 
 In the first example, we used a generic, one-compartment model from
 httk package \cite{JSSv079i04} to explain the overall workflow and the details in the simulation process. 
-The second example used acetaminophen (APAP)-PBPK model, a complex model with multiple compartments, to demonstare the reproducibility of our previous publication \cite{fphar201800588} and the capability of \textbf{pksensi}. The APAP-PBPK model describes the pharmacokinetics of parent APAP and its two metabolites glucuronide and sulfate. The model code is included in this package and can be generated through \textbf{\textit{pbpk\_apap\_model()}} function.
+The second example used acetaminophen (APAP)-PBPK model, a complex model with multiple compartments, to demonstrate the reproducibility of our previous publication \cite{fphar201800588} and the capability of \textbf{pksensi}. The APAP-PBPK model describes the pharmacokinetics of parent APAP and its two metabolites glucuronide and sulfate. The model code is included in this package and can be generated through \textbf{\textit{pbpk\_apap\_model()}} function.
 Users can refer to online vignettes and user manual in 
 the CRAN (\url{https://cran.r-project.org/web/packages/pksensi/index.html}) or the
 \textbf{pksensi} website (\url{https://nanhung.rbind.io/pksensi/}) for the detailed usage examples. 
@@ -470,7 +470,7 @@ such as deSolve, can be an alternative option for R users.
 The flexibility of our package can help modelers quantify the influence of
 model parameters on model outputs.
 It addition, \textbf{pksensi} also has potential to be performed in interactive PBPK
-modeling platform that was mentioned in rencent study \cite{li2019integration}.
+modeling platform that was mentioned in recent study \cite{li2019integration}.
 
 It is worth noting that the current global SA results are conditional on the 
 specific model and the given range of the model parameters. 
@@ -478,7 +478,7 @@ Other factors, such as the number of parameters examined,
 the parameter distributions/ranges, and the given dosing level in PK model 
 might also have a potential impact on the level of importance of each parameter, 
 but these "meta-uncertainties" are not currently addressed. Complex models with 
-high paremeter dimensionality are also challenging in global SA as they have 
+high parameter dimensionality are also challenging in global SA as they have 
 higher computer demands. As approaches are developed to address these complexities, 
 we hope to incorporate them into \textbf{pksensi}.
 
