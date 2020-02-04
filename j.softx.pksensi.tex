@@ -41,18 +41,18 @@
 \usepackage{listings}
 
 \lstset{ 
-  language=R,                     % the language of the code
-  basicstyle=\tiny\ttfamily, % the size of the fonts that are used for the code
-  backgroundcolor=\color{white},  % choose the background color. You must add \usepackage{color}
-  showspaces=false,               % show spaces adding particular underscores
-  showstringspaces=false,         % underline spaces within strings
-  showtabs=false,                 % show tabs within strings adding particular underscores
-  frame=single,                   % adds a frame around the code
-  rulecolor=\color{black},        % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. commens (green here))
-  tabsize=2,                      % sets default tabsize to 2 spaces
-  captionpos=b,                   % sets the caption-position to bottom
-  breaklines=true,                % sets automatic line breaking
-  breakatwhitespace=false,        % sets if automatic breaks should only happen at whitespace
+  language=R,                      % the language of the code
+  basicstyle=\scriptsize\ttfamily, % the size of the fonts that are used for the code
+  backgroundcolor=\color{white},   % choose the background color. You must add \usepackage{color}
+  showspaces=false,                % show spaces adding particular underscores
+  showstringspaces=false,          % underline spaces within strings
+  showtabs=false,                  % show tabs within strings adding particular underscores
+  frame=single,                    % adds a frame around the code
+  rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. commens (green here))
+  tabsize=2,                       % sets default tabsize to 2 spaces
+  captionpos=b,                    % sets the caption-position to bottom
+  breaklines=true,                 % sets automatic line breaking
+  breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
   keywordstyle=\color{RoyalBlue},     % keyword style
   commentstyle=\color{YellowGreen},   % comment style
   stringstyle=\color{ForestGreen}     % string literal style
@@ -304,16 +304,7 @@ This package can link with R deSolve package,
 which includes a comprehensive integrator to solve ODE. The GNU MCSim
 can be installed by following the instruction in GNU MCSim's manual on
 \url{https://www.gnu.org/software/mcsim/mcsim.html} or using the
-built-in \textbf{\textit{mcsim\_install()}} function in \textbf{pksensi}. The C
-compiler is already available in Linux or MacOS. The Windows user can
-install Rtools and set the working path of compiler before using this
-function as:
-
-\begin{lstlisting}
-Rtools.path <- "c:/Rtools/bin; c:/Rtools/mingw_64/bin"
-Sys.setenv(PATH = paste(Rtools.path, Sys.getenv("PATH"), sep=";"))
-\end{lstlisting}
-
+built-in \textbf{\textit{mcsim\_install()}} function in \textbf{pksensi}.
 
 \subsection{Parameter matrix generation}
 \label{parameter-matrix-generation}
@@ -406,48 +397,172 @@ SA is illustrated in Figure \ref{fig:workflow}.
 \includegraphics[width=1\linewidth]{workflow} \caption{\label{fig:workflow}Workflow for performing uncertainty and sensitivity analysis.}\label{fig:workflow}
 \end{figure}
 
+\subsection{Output visualization and decision
+support}\label{output-visualization-and-decision-support}
+
+The output of SA returns a list that contains the given time-points and
+values of all state variables (e.g., chemical concentrations in blood and other tissues).
+This format is particularly suited for further graphical routines within
+\textbf{pksensi}. Also, time-dependent sensitivity measurements of
+first and total effects for all parameters can be plotted
+simultaneously. If the computed SI show different values across
+replications under the same sample size, this indicates an inadequate
+sample number, which can create an unreliable result. It is essential to
+use a sufficient sample size to prevent incorrect judgments in parameter
+fixing. The package includes functions to check the convergence
+and sensitivity of model parameters, providing a means to assess the
+robustness of the sensitivity measurement. We also developed a
+``cut-off''-based approach in this package to distinguish between
+``influential'' and ``non-influential'' parameters. Finally,
+this package also provides visualization tools for the effective
+investigation and communication of results in decision support.
 
 \section{Illustrative Examples}
 \label{}
 
-Provide at least one illustrative example to demonstrate the major functions.
+Two PK models will apply to demonstrate how
+\textbf{pksensi} works. The first one is a generic model, and the
+second is a chemical-specific model.
 
-Optional: you may include one explanatory video that will appear next to your article, in the right hand side panel. (Please upload any video as a single supplementary file with your article. Only one MP4 formatted, with 50MB maximum size, video is possible per article. Recommended video dimensions are 640 x 480 at a maximum of 30 frames/second. Prior to submission please test and validate your .mp4 file at $ http://elsevier-apps.sciverse.com/GadgetVideoPodcastPlayerWeb/verification$. This tool will display your video exactly in the same way as it will appear on ScienceDirect.).
+\subsection{Equations}
+\label{equations}
+
+In the first example, we use a generic, one-compartment PK model from
+httk package \cite{JSSv079i04} to demonstrate how
+\textbf{pksensi} can apply to PK studies. The differential equations
+for this model is as,
+
+\[\frac{dA_{gutlumen}}{dt} = -k_{gutabs} \cdot A_{gutlumen} + g(t)\]
+\[\frac{dA_{rest}}{dt} = k_{gutabs} \cdot A_{gutlumen}-k_{elim} \cdot A_{rest}\]
+
+where \(A_{gutlumen}\) is the state variable that describes the quantity
+of compound in the gut lumen (mg) and \(A_{rest}\) is the quantity of
+compound in rest of body and blood (mg). The parameter \(k_{gutabs}\) is
+the absorption rate constant that describes the chemical absorption from
+the gut lumen into gut tissue through first-order processes (/h) and
+\(k_{elim}\) is the elimination rate constant (/h), which is equal to
+the total clearance divided by the volume of distribution. The
+time-dependent function \(g(t)\) is used to describe the oral dosing
+schedule.
+
+The concentration of the chemical in the rest of body and blood
+(\(C_{rest}\), mg/L) can calculate as,
+
+\[ C_{rest} = A_{rest} / V_{dist} \cdot BW\]
+
+where \(V_{dist}\) is the volume of distribution (L/kg BW) and \(BW\) is
+the body weight (kg). \(C_{rest}\) can also represent as the chemical
+concentration in plasma that can be further used to compare with
+observed results in a PK experiment. The bioavailability is assumed to
+be 100\% in this model.
+
+To start, we implemented the one-compartment PK model in R. The
+\textbf{pksensi} allows users select the preferred method to solve the
+PK model, either with the deSolve package or with GNU MCSim
+through the compile function. This section mainly focuses on how to
+conduct global SA with deSolve package with pure R
+environment.
+
+
+The one-compartment PK model can describe the quantity of compound in
+the gut lumen (\(Agutlument\)) and the rest of body
+(\(Agutlument\).) The \(Ametabolized\) is the quantity of
+compound transform and metabolize through hepatic clearance.
+
+\begin{lstlisting}
+pbtk1cpt <- function(t, state, parameters) {
+  with(as.list(c(state, parameters)), {
+    dAgutlument = - kgutabs * Agutlument
+    dAcompartment = kgutabs * Agutlument - ke * Acompartment
+    dAmetabolized = ke * Acompartment
+    Ccompartment = Acompartment / vdist * BW;
+    list(c(dAgutlument, dAcompartment, dAmetabolized), 
+         "Ccompartment" = Ccompartment) 
+  })
+}
+\end{lstlisting}
+
+The parameter values and initial states need to be assigned to specific
+values before simulation. Here, we use the corresponding parameter value
+of acetaminophen (APAP) in this example. These model parameters are
+derived from the \emph{in-vivo} or \emph{in-vitro} experiment results.
+The parameter value can be generated from \(parameterize\_1comp\)
+function in httk package as:
+
+\begin{lstlisting}
+library(httk)
+pars1comp <- (parameterize_1comp(chem.name = "acetaminophen"))
+initState <- c(Agutlument = 10, Acompartment = 0, Ametabolized = 0)
+\end{lstlisting}
+
+The given value of \(vdist\), \(ke\), and \(kgutabs\) in httk are 1.1 (L/kg BW), 0.23 (/h), and 2.18 (/h),
+respectively. The body weight is assumed to be 70 (kg). 
+In addition, the initial state condition (\(initState\)) need to specify in model solving.
+
+
+
+
+
+
 
 \section{Impact}
 \label{}
 
-\textbf{This is the main section of the article and the reviewers weight the description here appropriately}
+We initiated \textbf{pksensi} in order to facilitate a comprehensive
+and efficient global SA workflow in PK modeling, filling a crucial gap
+for open-source modeling communities. It provides a straightforward
+application to investigate the impact of parameters on model outputs
+across simulation time-points and variables. We adopted the eFAST
+method, a common variance-based SA that we found to have the best
+balance of efficiency and accuracy. In addition, the package also
+includes the ability to assess the convergence of SA results, which is
+rarely addressed in most global SA studies and software packages. We
+also developed functions to visualize the output results and help
+distinguish the ``influential'' and ``non-influential'' parameters that
+can be applied in parameter fixing in the model calibration. 
 
-Indicate in what way new research questions can be pursued as a result of the software (if any).
-
-Indicate in what way, and to what extent, the pursuit of existing research questions is improved (if so).
-
-Indicate in what way the software has changed the daily practice of its users (if so).
-
-Indicate how widespread the use of the software is within and outside the intended user group.
-
-Indicate in what way the software is used in commercial settings and/or how it led to the creation of spin-off companies (if so).
+We chose to integrate sensitivity analysis with GNU MCSim because it is
+a powerful open-source software package for dynamical simulation of
+biological-based models, mainly built for PK research with probabilistic
+approaches \cite{bois2009gnu}. In addition, the current version of
+\textbf{pksensi} includes both GNU MCSim and deSolve package as the
+main ODE solvers. Compared with the deSolve package, the GNU
+MCSim can provide better speed and efficiency to solve the ODEs in PK
+models. Although \textbf{pksensi} provides the essential features and
+functions to install and link with GNU MCSim, conducting the uncertainty
+and SA in PK modeling, the overall learning curve of this workflow might
+steep for users that are not familiar with GNU MCSim from model
+development, debugging, and testing. Therefore, the general package,
+such as deSolve, can be an alternative option for R users. It addition,
+\textbf{pksensi} also has potential to be performed in interactive PBPK
+modeling platform that was mentioned in rencent study \cite{li2019integration}.
 
 \section{Conclusions}
 \label{}
 
-Set out the conclusion of this original software publication.
+Overall, \textbf{pksensi} provides comprehensive suite of features and
+functions for performing global SA for PK models and can create robust
+and reproducible results for decision making in model development and
+calibration. Although \textbf{pksensi} used here is mainly for PK
+modeling, it can also be applied to other ODE-based dynamic models in
+order to investigate the sensitivity of model outputs to input
+parameters.
 
 \section{Conflict of Interest}
-Please select the appropriate text:
 
-Potential conflict of interest exists:
-We wish to draw the attention of the Editor to the following facts, which may be considered as potential conflicts of interest, and to significant financial contributions to this work. The nature of potential conflict of interest is described below: [Describe conflict of interest]
-
-No conflict of interest exists:
 We wish to confirm that there are no known conflicts of interest associated with this publication and there has been no significant financial support for this work that could have influenced its outcome.
-
 
 \section*{Acknowledgements}
 \label{}
 
-Optionally thank people and institutes you need to acknowledge. 
+This work was funded, in part, by grant 1U01FD005838 from the U.S. Food
+and Drug Administration (FDA) and grant P42 ES027704 from the U.S.
+National Institute of Environmental Health Sciences. This article
+reflects the views of the author and should not be construed to
+represent FDA's views or policies. We thank Dr.~Yasha Hartberg and
+Dr.~Barbara Gastel at the Texas A\&M University, Dr.~Frederic Bois from
+Certara and Dr.~Eleftheria Tsakalozou from U.S. FDA for reviewing the
+manuscript and consultation.
 
 %% The Appendices part is started with the command \appendix;
 %% appendix sections are then done as normal sections
