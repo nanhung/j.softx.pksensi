@@ -39,6 +39,7 @@
 \usepackage{lineno}
 \usepackage{hyperref}
 \usepackage{listings}
+\usepackage{pdflscape}
 
 \lstset{ 
   language=R,                      % the language of the code
@@ -53,9 +54,9 @@
   captionpos=b,                    % sets the caption-position to bottom
   breaklines=true,                 % sets automatic line breaking
   breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
-  keywordstyle=\color{RoyalBlue},     % keyword style
-  commentstyle=\color{YellowGreen},   % comment style
-  stringstyle=\color{ForestGreen}     % string literal style
+  keywordstyle=\color{RoyalBlue},   % keyword style
+  commentstyle=\color{PineGreen},   % comment style
+  stringstyle=\color{RubineRed}     % string literal style
 } 
 
 
@@ -123,7 +124,7 @@ For instance, we recently applied a global SA workflow to reduce the
 computational burden in the Bayesian Markov Chain Monte Carlo-based calibration process of a physiologically based pharmacokinetic (PBPK) model. 
 Although several SA algorithms and software packages are available, 
 no comprehensive software package exists that allows users to seamlessly solve 
-the PBPK model differential equations, conduct and visualize SA results, 
+differential equations in the PBPK model, conduct and visualize SA results, 
 and discriminate between the non-influential model parameters that can be fixed and those that need calibration. 
 Therefore, we developed an R package, named \textbf{pksensi}, to make global
 sensitivity analysis more accessible in physiologically based
@@ -141,8 +142,7 @@ decision making in pharmacokinetic model calibration.
 \end{abstract}
 
 \begin{keyword}
-%% keywords here, in the form: keyword \sep keyword
-Global sensitivity analysis \sep  Physiologically based kinetic modeling \sep R package
+Global sensitivity analysis \sep Pharmacokinetics \sep Physiologically based kinetic modeling \sep R package
 
 %% PACS codes here, in the form: \PACS code \sep code
 
@@ -430,8 +430,9 @@ Then, setting up the variables and its initial conditions for the prepared model
 Also, the simulation time points have to provided in this part.
 The third step is to identify the model parameters that will be examed in global SA.
 The corresponding ranges have to define in a list object, a generic vector to further used in the analysis. 
-After the definition, thwe users can use \textbf{rfast99()} to create parameter matrix. 
-Finally, solve the ODE in the PK model by using the \textbf{solve\_fun()} function and visualize the result. The result of the one-compartment model shows that body weight (BW) is a non-influential parameter for the blood concentration in the simulation.
+After the definition, thwe users can use \textit{\textbf{rfast99()}} to create parameter matrix. 
+Finally, solve the ODE in the PK model by using the \textit{\textbf{solve\_fun()}} function and visualize the result.
+The result of the one-compartment model shows that body weight (BW) is a non-influential parameter for the blood concentration in the simulation. In addition, use model code and solving engine from GNU MCSim (\textit{\textbf{solve\_mcsim()}}) can provide the fastest computational speed.
 
 The second example used acetaminophen (APAP)-PBPK model, 
 a complex model with multiple compartments, to demonstrate the reproducibility of our previous publication \cite{fphar201800588} and the capability of \textbf{pksensi}. 
@@ -585,6 +586,8 @@ check(out)  # Print result to console
 \clearpage
 \newpage
 
+\begin{landscape}
+
 \begin{figure}
 \includegraphics[width=1\linewidth]{workflow} 
 \caption{The proposed workflow for performing uncertainty and sensitivity analysis in Bayesian MCMC model calibration process.}
@@ -609,9 +612,9 @@ check(out)  # Print result to console
 \label{fig:example-2}
 \end{figure}
 
+\end{landscape}
 
 \end{document}
-\endinput
 
 %%
 %% End of file `SoftwareX_article_template.tex'.
