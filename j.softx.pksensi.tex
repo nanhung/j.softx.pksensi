@@ -146,6 +146,8 @@ Global sensitivity analysis \sep  Physiologically based kinetic modeling \sep R 
 
 \end{frontmatter}
 
+\newpage
+
 \section*{Required Metadata}
 \label{}
 
@@ -394,9 +396,6 @@ to conduct Monte Carlo analysis, which is built-into GNU MCSim and
 examine the simulation result. The general workflow of uncertainty and
 SA in \textbf{pksensi} is illustrated in Figure \ref{fig:workflow}.
 
-\begin{figure}
-\includegraphics[width=1\linewidth]{workflow} \caption{\label{fig:workflow}Workflow for performing uncertainty and sensitivity analysis.}\label{fig:workflow}
-\end{figure}
 
 \subsection{Output visualization and decision
 support}\label{output-visualization-and-decision-support}
@@ -425,15 +424,8 @@ We currently proposed two example models to illustrate using \textbf{pksensi} in
 In the first example, we used a generic, one-compartment model from
 httk package \cite{JSSv079i04} to explain the overall workflow and the details in the simulation process. The partial example of the R code and result is given in Figure \ref{fig:example-1}. 
 
-\begin{figure}
-\includegraphics[width=1\linewidth]{example-1} \caption{\label{fig:example-1} Example R script and its corresponding results for the application of the \textbf{pksensi} in one-compartment PK modeling.}\label{fig:example-1}
-\end{figure}
 
 The second example used acetaminophen (APAP)-PBPK model, a complex model with multiple compartments, to demonstrate the reproducibility of our previous publication \cite{fphar201800588} and the capability of \textbf{pksensi}. The APAP-PBPK model describes the pharmacokinetics of parent APAP and its two metabolites glucuronide \(AG\) and sulfate \(AS\). The model code is included in this package and can be generated through \textbf{\textit{pbpk\_apap\_model()}} function. Figure \ref{fig:example-2} shows the heat map visualizing the result of time-dependent total SI computed for the global SA method. 
-
-\begin{figure}
-\includegraphics[width=1\linewidth]{example-2} \caption{\label{fig:example-2} Heat map representation of time-dependent total SI computed from 21 substance-specific parameters in APAP-PBPK model.}\label{fig:example-2}
-\end{figure}
 
 Users can refer to online vignettes and user manual in 
 the CRAN (\url{https://cran.r-project.org/web/packages/pksensi/index.html}) or the
@@ -521,7 +513,6 @@ manuscript and consultation.
 %% The Appendices part is started with the command \appendix;
 %% appendix sections are then done as normal sections
 
-
 \appendix
 \section*{appendix}
 \label{}
@@ -582,11 +573,11 @@ check(out)  # Print result to console
 %% else use the following coding to input the bibitems directly in the
 %% TeX file.
 
-
-
 \bibliographystyle{elsarticle-num} 
 \bibliography{j.softx.pksensi}
 
+\clearpage
+\newpage
 
 \section*{Current executable software version}
 \label{}
@@ -617,7 +608,49 @@ S7 & Support email for questions & \\
 \label{} 
 \end{table}
 
+
+\clearpage
+\newpage
+
+\section*{Figure Captions}
+\label{}
+
+Figure \ref{fig:workflow}: Workflow for performing uncertainty and sensitivity analysis. \newline
+
+Figure \ref{fig:example-1}: Example R script and its corresponding results for the application of the \textbf{pksensi} in one-compartment PK modeling. \newline
+
+Figure \ref{fig:example-2}: Heat map representation of time-dependent total SI computed from 21 substance-specific parameters in APAP-PBPK model. \newline
+
+\clearpage
+\newpage
+
+\begin{figure}
+\includegraphics[width=1\linewidth]{workflow} 
+\caption{\label{fig:workflow}Workflow for performing uncertainty and sensitivity analysis.}
+\label{fig:workflow}
+\end{figure}
+
+\clearpage
+\newpage
+
+\begin{figure}
+\includegraphics[width=1\linewidth]{example-1} 
+\caption{\label{fig:example-1} Example R script and its corresponding results for the application of the \textbf{pksensi} in one-compartment PK modeling.}
+\label{fig:example-1}
+\end{figure}
+
+\clearpage
+\newpage
+
+\begin{figure}
+\includegraphics[width=1\linewidth]{example-2} 
+\caption{\label{fig:example-2} Heat map representation of time-dependent total SI computed from 21 substance-specific parameters in APAP-PBPK model.}
+\label{fig:example-2}
+\end{figure}
+
+
 \end{document}
 \endinput
+
 %%
 %% End of file `SoftwareX_article_template.tex'.
