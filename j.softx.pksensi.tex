@@ -116,9 +116,16 @@ Engineering, Colorado State University, Fort Collins, CO, USA\\
 
 \begin{abstract}
 %% Text of abstract 
-Sensitivity analysis (SA) is an essential tool for modelers to understand the influence of model parameters on model outputs. 
-It is also increasingly used in developing and assessing pharmacokinetic models.
-We developed an R package, named \textbf{pksensi}, to make global
+Sensitivity analysis (SA) is an essential tool for modelers to understand the 
+influence of model parameters on model outputs. 
+It is also increasingly used in developing and assessing pharmacokinetic models. 
+For instance, we recently applied a global SA workflow to reduce the 
+computational burden in the Bayesian Markov Chain Monte Carlo-based calibration process of a physiologically based pharmacokinetic (PBPK) model. 
+Although several SA algorithms and software packages are available, 
+no comprehensive software package exists that allows users to seamlessly solve 
+the PBPK model differential equations, conduct and visualize SA results, 
+and discriminate between the non-influential model parameters that can be fixed and those that need calibration. 
+Therefore, we developed an R package, named \textbf{pksensi}, to make global
 sensitivity analysis more accessible in physiologically based
 kinetic modeling. This package can investigate both parameter
 uncertainty and sensitivity in pharmacokinetic models, including those
@@ -149,35 +156,29 @@ Global sensitivity analysis \sep  Physiologically based kinetic modeling \sep R 
 \newpage
 
 \section*{Required Metadata}
-\label{}
 
 \section*{Current code version}
-\label{}
-
-Ancillary data table required for subversion of the codebase. Kindly replace examples in right column with the correct information about your current code, and leave the left column as it is.
 
 \begin{table}[H]
 \begin{tabular}{|l|p{6.5cm}|p{6.5cm}|}
 \hline
 \textbf{Nr.} & \textbf{Code metadata description} & \textbf{Please fill in this column} \\
 \hline
-C1 & Current code version & For example v42 \\
+C1 & Current code version & 1.1.5 \\
 \hline
-C2 & Permanent link to code/repository used for this code version & For example: $https://github.com/mozart/mozart2$ \\
+C2 & Permanent link to code/repository used for this code version & \url{https://github.com/nanhung/pksensi} \\
 \hline
-C3 & Code Ocean compute capsule & For example: $https://codeocean.com/2017/07/30/neurospeech-colon-an-open-source-software-for-parkinson-apos-s-speech-analysis/code$\\
+C4 & Legal Code License   & LPGL-3.0 \\
 \hline
-C4 & Legal Code License   & List one of the approved licenses \\
+C5 & Code versioning system used & git \\
 \hline
-C5 & Code versioning system used & For example svn, git, mercurial, etc. put none if none \\
+C6 & Software code languages, tools, and services used & R \\
 \hline
-C6 & Software code languages, tools, and services used & For example C++, python, r, MPI, OpenCL, etc. \\
+C7 & Compilation requirements, operating environments \& dependencies & ggplot2, data.table, deSolve, dplyr, getPass, magrittr, reshape \\
 \hline
-C7 & Compilation requirements, operating environments \& dependencies & \\
+C8 & If available Link to developer documentation/manual & \url{https://nanhung.rbind.io/pksensi/} \\
 \hline
-C8 & If available Link to developer documentation/manual & For example: $http://mozart.github.io/documentation/$ \\
-\hline
-C9 & Support email for questions & \\
+C9 & Support email for questions & \url{nhsieh@cvm.tamu.edu} \\
 \hline
 \end{tabular}
 \caption{Code metadata (mandatory)}
@@ -189,19 +190,10 @@ C9 & Support email for questions & \\
 
 %% main text
 
-The permanent link to code/repository or the zip archive should include the following requirements: 
-
-README.txt and LICENSE.txt.
-
-Source code in a src/ directory, not the root of the repository.
-
-Tag corresponding with the version of the software that is reviewed.
-
-Documentation in the repository in a docs/ directory, and/or READMEs, as appropriate.
-
+\newpage
 
 \section{Motivation and significance}
-\label{}
+
 Sensitivity analysis (SA) is a mathematical technique to investigate how
 variations in model parameters affect model outputs. An increasing
 number of studies use SA to determine which model parameters contribute
@@ -290,7 +282,6 @@ accessible and reproducible in pharmacological and toxicological
 researches. 
 
 \section{Software description}
-\label{}
 
 Our package can investigate both parameter uncertainty and
 sensitivity in PK model with multivariate model outputs. Moreover, it
@@ -301,7 +292,6 @@ sophisticated PK modeling, including MCMC. The analytical framework in
 analysis and diagnostic tools to support the modeling process.
 
 \subsection{Installation}
-\label{installation}
 
 This package can link with R deSolve package,
 which includes a comprehensive integrator to solve ODE. The GNU MCSim
@@ -310,7 +300,6 @@ can be installed by following the instruction in GNU MCSim's manual on
 built-in \textbf{\textit{mcsim\_install()}} function in \textbf{pksensi}.
 
 \subsection{Parameter matrix generation}
-\label{parameter-matrix-generation}
 
 We adopted eFAST, the widely used analysis of variance (ANOVA)-like
 global SA approach to decompose the variance to partial variances for
@@ -363,7 +352,7 @@ log-normal distribution, and minimum/maximum of uniform distribution).
 The number of model evaluations is equal to the sample size times the
 number of model parameters.
 
-\subsection{Modeling}\label{modeling}
+\subsection{Modeling}
 
 The \textbf{pksensi} provides a useful function to solve ODEs
 in PK models using analytical and numerical approaches. The solution can
@@ -398,7 +387,7 @@ SA in \textbf{pksensi} is illustrated in Figure \ref{fig:workflow}.
 
 
 \subsection{Output visualization and decision
-support}\label{output-visualization-and-decision-support}
+support}
 
 The output of SA returns a list that contains the given time-points and
 values of all state variables (e.g., chemical concentrations in blood and other tissues).
@@ -418,22 +407,39 @@ this package also provides visualization tools for the effective
 investigation and communication of results in decision support.
 
 \section{Illustrative Examples}
-\label{}
 
 We currently proposed two example models to illustrate using \textbf{pksensi} in PK modeling. 
 In the first example, we used a generic, one-compartment model from
-httk package \cite{JSSv079i04} to explain the overall workflow and the details in the simulation process. The partial example of the R code and result is given in Figure \ref{fig:example-1}. 
-
-
-The second example used acetaminophen (APAP)-PBPK model, a complex model with multiple compartments, to demonstrate the reproducibility of our previous publication \cite{fphar201800588} and the capability of \textbf{pksensi}. The APAP-PBPK model describes the pharmacokinetics of parent APAP and its two metabolites glucuronide \(AG\) and sulfate \(AS\). The model code is included in this package and can be generated through \textbf{\textit{pbpk\_apap\_model()}} function. Figure \ref{fig:example-2} shows the heat map visualizing the result of time-dependent total SI computed for the global SA method. 
-
+httk package \cite{JSSv079i04} to explain the overall workflow and the details in the simulation process.
 Users can refer to online vignettes and user manual in 
 the CRAN (\url{https://cran.r-project.org/web/packages/pksensi/index.html}) or the
 \textbf{pksensi} website (\url{https://nanhung.rbind.io/pksensi/}) for the detailed usage examples. 
+The partial example of the R code and its result is given in Appendix A and Figure \ref{fig:example-1} that comprises the following essential steps in the process.
 
+\begin{enumerate}
+  \item Construct the PK model
+  \item Define initial conditions, output time steps and variables
+  \item Set parameter distributions
+  \item Conduct global SA
+  \item Check and visualize result
+\end{enumerate}
+
+The first step is to prepare and construct the PK model. 
+The model code can be written based on R deSolve and GNU MCSim format to provide the flexibility for the user. 
+Then, setting up the variables and its initial conditions for the prepared model.
+Also, the simulation time points have to provided in this part.
+The third step is to identify the model parameters that will be examed in global SA.
+The corresponding ranges have to define in a list object, a generic vector to further used in the analysis. 
+After the definition, thwe users can use \textbf{rfast99()} to create parameter matrix. 
+Finally, solve the ODE in the PK model by using the \textbf{solve\_fun()} function and visualize the result. The result of the one-compartment model shows that body weight (BW) is a non-influential parameter for the blood concentration in the simulation.
+
+The second example used acetaminophen (APAP)-PBPK model, 
+a complex model with multiple compartments, to demonstrate the reproducibility of our previous publication \cite{fphar201800588} and the capability of \textbf{pksensi}. 
+The APAP-PBPK model describes the pharmacokinetics of parent APAP and its two metabolites glucuronide \(AG\) and sulfate \(AS\). 
+We applied the comprehensive global SA workflow to the original published model with 21 model parameters \cite{s13318-015-0253-x}. 
+Figure \ref{fig:example-2} shows the time-dependent total SI computed for the global SA method. The heat map provides an alternative way to visualize the estimated results. Some parameters (e.g., \(CYP\_Km\)) showed non-influential impact across all three output variables across investigation time interval.
 
 \section{Impact and conclusions}
-\label{}
 
 Computational modeling has become an essential technique in modern 
 scientific research to support hypotheses, experiments, and discoveries. 
@@ -499,7 +505,6 @@ parameters.
 The authors declare that they have no known competing financial interests or personal relationships that could have appeared to influence the work reported in this paper.
 
 \section*{Acknowledgements}
-\label{}
 
 This work was funded, in part, by grant 1U01FD005838 from the U.S. Food
 and Drug Administration (FDA) and grant P42 ES027704 from the U.S.
@@ -514,8 +519,7 @@ manuscript and consultation.
 %% appendix sections are then done as normal sections
 
 \appendix
-\section*{appendix}
-\label{}
+\section*{Appendix A. Example code}
 
 \begin{lstlisting}
 library(pksensi)
@@ -576,39 +580,6 @@ check(out)  # Print result to console
 \bibliographystyle{elsarticle-num} 
 \bibliography{j.softx.pksensi}
 
-\clearpage
-\newpage
-
-\section*{Current executable software version}
-\label{}
-
-Ancillary data table required for sub version of the executable software: (x.1, x.2 etc.) kindly replace examples in right column with the correct information about your executables, and leave the left column as it is.
-
-\begin{table}[!h]
-\begin{tabular}{|l|p{6.5cm}|p{6.5cm}|}
-\hline
-\textbf{Nr.} & \textbf{(Executable) software metadata description} & \textbf{Please fill in this column} \\
-\hline
-S1 & Current software version & For example 1.1, 2.4 etc. \\
-\hline
-S2 & Permanent link to executables of this version  & For example: $https://github.com/combogenomics/$ $DuctApe/releases/tag/DuctApe-0.16.4$ \\
-\hline
-S3 & Legal Software License & List one of the approved licenses \\
-\hline
-S4 & Computing platforms/Operating Systems & For example Android, BSD, iOS, Linux, OS X, Microsoft Windows, Unix-like , IBM z/OS, distributed/web based etc. \\
-\hline
-S5 & Installation requirements \& dependencies & \\
-\hline
-S6 & If available, link to user manual - if formally published include a reference to the publication in the reference list & For example: $http://mozart.github.io/documentation/$ \\
-\hline
-S7 & Support email for questions & \\
-\hline
-\end{tabular}
-\caption{Software metadata (optional)}
-\label{} 
-\end{table}
-
-
 \newpage
 
 \clearpage
@@ -616,7 +587,7 @@ S7 & Support email for questions & \\
 
 \begin{figure}
 \includegraphics[width=1\linewidth]{workflow} 
-\caption{\label{fig:workflow}Workflow for performing uncertainty and sensitivity analysis.}
+\caption{The proposed workflow for performing uncertainty and sensitivity analysis in Bayesian MCMC model calibration process.}
 \label{fig:workflow}
 \end{figure}
 
@@ -625,7 +596,7 @@ S7 & Support email for questions & \\
 
 \begin{figure}
 \includegraphics[width=1\linewidth]{example-1} 
-\caption{\label{fig:example-1} Example R script and its corresponding results for the application of the \textbf{pksensi} in one-compartment PK modeling.}
+\caption{Example R script and its corresponding results for the application of the \textbf{pksensi} in one-compartment PK modeling. The checking result can directly show in the R console through \textit{\textbf{check()}} function, and the visualization result can output by \textit{\textbf{plot()}} function.}
 \label{fig:example-1}
 \end{figure}
 
@@ -634,7 +605,7 @@ S7 & Support email for questions & \\
 
 \begin{figure}
 \includegraphics[width=1\linewidth]{example-2} 
-\caption{\label{fig:example-2} Heat map representation of time-dependent total SI computed from 21 substance-specific parameters in APAP-PBPK model.}
+\caption{Heat map representation of time-dependent total SI computed from 21 substance-specific parameters in APAP-PBPK model.}
 \label{fig:example-2}
 \end{figure}
 
