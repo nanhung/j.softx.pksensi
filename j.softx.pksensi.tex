@@ -142,7 +142,7 @@ decision making in pharmacokinetic model calibration.
 \end{abstract}
 
 \begin{keyword}
-Global sensitivity analysis \sep Pharmacokinetics \sep Physiologically based kinetic modeling \sep R package
+  Global sensitivity analysis \sep Pharmacokinetics \sep Physiologically based kinetic modeling \sep R package
 
 %% PACS codes here, in the form: \PACS code \sep code
 
@@ -501,7 +501,7 @@ modeling, it can also be applied to other ODE-based dynamic models in
 order to investigate the sensitivity of model outputs to input
 parameters.
 
-\section{Conflict of Interest}
+\section*{Conflict of Interest}
 
 The authors declare that they have no known competing financial interests or personal relationships that could have appeared to influence the work reported in this paper.
 
@@ -567,6 +567,12 @@ out <- solve_fun(x, time = t, func = pbtk1cpt, initState = initState, outnames =
 plot(out)   # Visualize result
 check(out)  # Print result to console
 \end{lstlisting}
+
+\section*{CRediT authorship contribution statement}
+
+\textbf{Nan-Hung Hsieh:} Conceptualization, Software, Writing - Original Draft.
+\textbf{Brad Reisfeld:} Funding acquisition, Project administration. 
+\textbf{Weihsueh A. Chiu:} Supervision, Methodology, Writing - Review \& Editing. 
 
 %% References:
 %% If you have bibdatabase file and want bibtex to generate the
