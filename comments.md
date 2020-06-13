@@ -27,3 +27,5 @@ I have only a few minor comments.
 - Minor Comments
 
   1. Line 187-188: Statements are hard to understand. It needs correction at 'to further used,' and 'thwe' in the following text: "The corresponding ranges have to define in a list object, a generic vector to further used in the analysis. After the definition, thwe users can use rfast99() to create parameter matrix."
+  
+  Ans: We revised the description as "The third step is to identify the model parameters that will be examed in global SA and create the parameter matrix. After the parameter selection, we have to assign the corresponding value in probability function, such as minimum and maximum in a uniform distribution. After the definition, the users can userfast99() with the assignments (e.g., parameter names, sample number, parameter distribution, and its corresponding properties) that were defined in the above steps to create parameter matrix."

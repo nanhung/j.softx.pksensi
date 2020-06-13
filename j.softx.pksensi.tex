@@ -424,15 +424,11 @@ The partial example of the R code and its result is given in Appendix A and Figu
   \item Check and visualize result
 \end{enumerate}
 
-The first step is to prepare and construct the PK model. 
-The model code can be written based on R deSolve and GNU MCSim format to provide the flexibility for the user. 
-Then, setting up the variables and its initial conditions for the prepared model.
-Also, the simulation time points have to provided in this part.
-The third step is to identify the model parameters that will be examed in global SA.
-The corresponding ranges have to define in a list object, a generic vector to further used in the analysis. 
-After the definition, thwe users can use \textit{\textbf{rfast99()}} to create parameter matrix. 
-Finally, solve the ODE in the PK model by using the \textit{\textbf{solve\_fun()}} function and visualize the result.
-The result of the one-compartment model shows that body weight (BW) is a non-influential parameter for the blood concentration in the simulation. In addition, use model code and solving engine from GNU MCSim (\textit{\textbf{solve\_mcsim()}}) can provide the fastest computational speed.
+The first step is to prepare and construct the PK model. The model code can be written based on R deSolve and GNU MCSim format to provide the flexibility for the user. Then, setting up the variables and its initial conditions for the prepared model. Also, the simulation time points have to provided in this part.
+
+\textcolor{red}{The third step is to identify the model parameters that will be examed in global SA and create the parameter matrix. After the parameter selection, we have to assign the corresponding value in probability function, such as minimum and maximum in a uniform distribution. After the definition, the users can use \textit{\textbf{rfast99()}} with the assignments (e.g., parameter names, sample number, parameter distribution, and its corresponding properties) that were defined in the above steps to create parameter matrix.}
+
+Finally, solve the ODE in the PK model by using the \textit{\textbf{solve\_fun()}} function and visualize the result. The result of the one-compartment model shows that body weight (BW) is a non-influential parameter for the blood concentration in the simulation (see Appendix). In addition, use model code and solving engine from GNU MCSim (\textit{\textbf{solve\_mcsim()}}) can provide the fastest computational speed.
 
 The second example used acetaminophen (APAP)-PBPK model, 
 a complex model with multiple compartments, to demonstrate the reproducibility of our previous publication \cite{fphar201800588} and the capability of \textbf{pksensi}. 
