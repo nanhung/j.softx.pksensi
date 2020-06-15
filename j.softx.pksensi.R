@@ -35,9 +35,12 @@ set.seed(1234)
 params <- c("vdist", "ke", "kgutabs", "BW")
 x <- rfast99(params, n = 200, q = q, q.arg = q.arg, replicate = 10)
 
-# Step 4. Run simulation (will take few minutes)
+# Step 4. Conduct simulation (will take few minutes)
 out <- solve_fun(x, time = t, func = pbtk1cpt, initState = initState, outnames = outputs)
 
-# Step 5. Check result
+# Step 5. Uncertainty analysis
+pksim(out)  # Use to compare with "real" data (if any)
+
+# Step 6. Check and visualize the result of sensitivity analysis
 plot(out)   # Visualize result
 check(out)  # Print result to console
