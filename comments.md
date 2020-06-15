@@ -21,9 +21,12 @@ I have only a few minor comments.
     - The words in abstract is about 222 words which is much larger than 100 words.
     - The words in main text is about 5578 words which is much larger than 3000 words.
     - Software metadata table is missing.
+  Ans: After double checking the Guide for Authors in SoftwareX web page (https://www.elsevier.com/journals/softwarex/2352-7110/guide-for-authors), we think that there is no word restriction for abstract.  https://app.uio.no/ifi/texcount/online.php
+
 
   2. Proprietary names such as R package names would be shown better in Gothic or bold font. 'pksensi' is in bold but other package names such as 'sensitivity' are not in bold, which is a little confusing in reading the text.
-
+  Ans: We revised the article and use bold font for all mentioned R package.
+  
 - Minor Comments
 
   1. Line 187-188: Statements are hard to understand. It needs correction at 'to further used,' and 'thwe' in the following text: "The corresponding ranges have to define in a list object, a generic vector to further used in the analysis. After the definition, thwe users can use rfast99() to create parameter matrix."

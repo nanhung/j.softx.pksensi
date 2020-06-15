@@ -164,21 +164,21 @@ decision making in pharmacokinetic model calibration.
 \hline
 \textbf{Nr.} & \textbf{Code metadata description} & \textbf{Please fill in this column} \\
 \hline
-C1 & Current code version & 1.1.5 \\
+C1 & Current code version & 1.2.0 \\
 \hline
 C2 & Permanent link to code/repository used for this code version & \url{https://github.com/nanhung/pksensi} \\
 \hline
-C4 & Legal Code License   & LPGL-3.0 \\
+C4 & Legal Code License & LPGL-3.0 \\
 \hline
 C5 & Code versioning system used & git \\
 \hline
 C6 & Software code languages, tools, and services used & R \\
 \hline
-C7 & Compilation requirements, operating environments \& dependencies & ggplot2, data.table, deSolve, dplyr, getPass, magrittr, reshape \\
+C7 & Compilation requirements, operating environments \& dependencies & ggplot2, data.table, deSolve, dplyr, getPass, magrittr, foreach, parallel, doParallel, reshape \\
 \hline
 C8 & If available Link to developer documentation/manual & \url{https://nanhung.rbind.io/pksensi/} \\
 \hline
-C9 & Support email for questions & \url{nhsieh@cvm.tamu.edu} \\
+C9 & Support email for questions & \url{d99622005@ntu.edu.tw} \\
 \hline
 \end{tabular}
 \caption{Code metadata (mandatory)}
@@ -247,25 +247,25 @@ Most of SA tools are constructed using scientific computing software,
 such as Matlab \cite{pianosi2015matlab},
 python \cite{herman2017salib}, and R \cite{iooss2017introduction}. 
 The R software is widely used and includes numerous developed packages,
-such as sensitivity \cite{R-sensitivity}, 
+such as \textbf{sensitivity} \cite{R-sensitivity}, 
 which is a practical tool to conduct local and
-global SA. The sensitivity package includes some functions to
+global SA. The \textbf{sensitivity} package includes some functions to
 generate the parameter sequences by using different computing
 algorithms. Also, it provides a feasible way to integrate external
 modeling results. This computational approach can effectively solve the
 heavy computing burden of numerical solutions within the pure R
-environment. Several other R packages, such as FME,
-multisensi, and ODEsensitivity include SA tools and
+environment. Several other R packages, such as \textbf{FME},
+\textbf{multisensi}, and \textbf{ODEsensitivity} include SA tools and
 are freely available in the Comprehensive R Archive Network (CRAN). The
-FME package contains a basic method for performing local SA
+\textbf{FME} package contains a basic method for performing local SA
 for dynamic models \cite{JSSv033i03}. It can also conduct collinearity
 and identifiability analysis to evaluate which model parameters can
 estimate or exclude based on available observation data. The
 multisensi package provides SA for models with multivariate
-output \cite{R-multisensi}. ODEsensitivity packages can perform SA in
+output \cite{R-multisensi}. \textbf{ODEsensitivity} packages can perform SA in
 ordinary differential equation (ODE) models \cite{R-ODEsensitivity}. It
 utilizes the ODE interface from the deSolve package and
-connect it with the SA from the sensitivity package. Other
+connect it with the SA from the \textbf{sensitivity} package. Other
 related packages such as mtk \cite{RJ-2015-031} and
 fast \cite{R-fast} are designed to investigate the importance
 of model parameter. 
@@ -293,7 +293,7 @@ analysis and diagnostic tools to support the modeling process.
 
 \subsection{Installation}
 
-This package can link with R deSolve package,
+This package can link with R \textbf{deSolve} package,
 which includes a comprehensive integrator to solve ODE. The GNU MCSim
 can be installed by following the instruction in GNU MCSim's manual on
 \url{https://www.gnu.org/software/mcsim/mcsim.html} or using the
@@ -306,7 +306,7 @@ global SA approach to decompose the variance to partial variances for
 multidimensional parameters in numerical models in this package. Most of
 the available eFAST functions, such as the algorithm to generate the
 parameter space and to set the sampling frequency, were sourced from the
-R sensitivity package \cite{R-sensitivity}. The eFAST method
+R \textbf{sensitivity} package \cite{R-sensitivity}. The eFAST method
 computes the sensitivity index (SI) via ANOVA-like decomposition of the
 function for analysis. This type of global SA approach and SI also know
 as Sobol' method and Sobol' index. Since the estimated SI is not stable
@@ -615,6 +615,34 @@ check(out)  # Print result to console
 \end{figure}
 
 \end{landscape}
+
+
+\section*{Current executable software version}
+\label{}
+
+\begin{table}[!h]
+\begin{tabular}{|l|p{6.5cm}|p{6.5cm}|}
+\hline
+\textbf{Nr.} & \textbf{(Executable) software metadata description} & \textbf{Please fill in this column} \\
+\hline
+S1 & Current software version & 1.2.0 \\
+\hline
+S2 & Permanent link to executables of this version  & \url{https://cran.r-project.org/web/packages/pksensi} \\
+\hline
+S3 & Legal Software License & GPL-3 \\
+\hline
+S4 & Computing platforms/Operating Systems & Linux, MacOS, Microsoft Windows \\
+\hline
+S5 & Installation requirements \& dependencies & ggplot2, data.table, deSolve, dplyr, getPass, magrittr, foreach, parallel, doParallel, reshape \\
+\hline
+S6 & If available, link to user manual - if formally published include a reference to the publication in the reference list & \url{https://cran.r-project.org/web/packages/pksensi/pksensi.pdf} \\
+\hline
+S7 & Support email for questions & \url{d99622005@ntu.edu.tw}\\
+\hline
+\end{tabular}
+\caption{Software metadata (optional)}
+\label{} 
+\end{table}
 
 \end{document}
 
