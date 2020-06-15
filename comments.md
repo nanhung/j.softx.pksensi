@@ -7,11 +7,13 @@ Overall well this is a well written paper written although there are a few typos
 I have only a few minor comments.
 
   1. The workflow shown in figure 1 demonstrates what I would regard as best practice for development and calibration of a PBPK model. Uncertainty analysis in some form for the testing, debugging and assessment of the quantitative behaviour of a model over the bounds of the input parameters is an essential prerequisite to sensitivity analysis. However, whilst this is briefly covered in the text (beginning on line 137) the authors don’t specify how the results from uncertainty analysis might be used to refine parameter ranges. Furthermore, there is no mention of uncertainty analysis in the 5 step routine in the illustrative examples section.
+  Ans: 
 
   2. I suggest the authors review the ordering of the text so that it reflects the workflow of figure 1. At present the text on uncertainty analysis follows the text on sensitivity analysis. 
+  Ans:
 
   3. Paragraph starting on line 137. 'The uncertainty analysis is a crucial modelling process within SA ...' Uncertainty analysis is the study of uncertainty in model outputs that arises as a consequence of uncertainty on model inputs. Sensitivity analysis goes a step further in attributing the uncertainty in outputs to individual parameters or interactions between parameters. Uncertainty and sensitivity analysis are distinct but complimentary processes.
-
+  Ans:
 
 **Reviewer 2**
   
@@ -21,9 +23,36 @@ I have only a few minor comments.
     - The words in abstract is about 222 words which is much larger than 100 words.
     - The words in main text is about 5578 words which is much larger than 3000 words.
     - Software metadata table is missing.
-  Ans: After double checking the Guide for Authors in SoftwareX web page (https://www.elsevier.com/journals/softwarex/2352-7110/guide-for-authors), we think that there is no word restriction for abstract.  https://app.uio.no/ifi/texcount/online.php
-
-
+  Ans: After double checking the Guide for Authors in SoftwareX web page (https://www.elsevier.com/journals/softwarex/2352-7110/guide-for-authors), we think that there is no word restriction for abstract. In addition, the result from textcount (  https://app.uio.no/ifi/texcount/online.php) shows that the words in main is under 3000 words as below
+  
+  Word count
+Words in text: 2978
+Words in headers: 56
+Words outside text (captions, etc.): 75
+Number of headers: 17
+Number of floats/tables/figures: 5
+Number of math inlines: 15
+Number of math displayed: 2
+Subcounts:
+  text+headers+captions (#headers/#floats/#inlines/#displayed)
+266+15+0 (2/0/0/0) _top_
+0+2+0 (1/0/0/0) Section: Required Metadata
+0+3+3 (1/1/0/0) Section: Current code version
+694+3+0 (1/0/0/0) Section: Motivation and significance
+71+2+0 (1/0/0/0) Section: Software description
+41+1+0 (1/0/0/0) Subsection: Installation
+396+3+0 (1/0/12/2) Subsection: Parameter matrix generation
+295+1+0 (1/0/0/0) Subsection: Modeling
+154+5+0 (1/0/0/0) Subsection
+401+2+0 (1/0/3/0) Section: Illustrative Examples
+531+3+0 (1/0/0/0) Section: Impact and conclusions
+26+3+0 (1/0/0/0) Section: Conflict of Interest
+82+1+0 (1/0/0/0) Section: Acknowledgements
+0+4+0 (1/0/0/0) Section: Appendix A. Example code
+21+4+69 (1/3/0/0) Section: CRediT authorship contribution statement
+0+4+3 (1/1/0/0) Section: Current executable software version
+  
+  
   2. Proprietary names such as R package names would be shown better in Gothic or bold font. 'pksensi' is in bold but other package names such as 'sensitivity' are not in bold, which is a little confusing in reading the text.
   Ans: We revised the article and use bold font for all mentioned R package.
   

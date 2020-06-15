@@ -254,23 +254,10 @@ generate the parameter sequences by using different computing
 algorithms. Also, it provides a feasible way to integrate external
 modeling results. This computational approach can effectively solve the
 heavy computing burden of numerical solutions within the pure R
-environment. Several other R packages, such as \textbf{FME},
-\textbf{multisensi}, and \textbf{ODEsensitivity} include SA tools and
-are freely available in the Comprehensive R Archive Network (CRAN). The
-\textbf{FME} package contains a basic method for performing local SA
-for dynamic models \cite{JSSv033i03}. It can also conduct collinearity
-and identifiability analysis to evaluate which model parameters can
-estimate or exclude based on available observation data. The
-multisensi package provides SA for models with multivariate
-output \cite{R-multisensi}. \textbf{ODEsensitivity} packages can perform SA in
-ordinary differential equation (ODE) models \cite{R-ODEsensitivity}. It
-utilizes the ODE interface from the deSolve package and
-connect it with the SA from the \textbf{sensitivity} package. Other
-related packages such as mtk \cite{RJ-2015-031} and
-fast \cite{R-fast} are designed to investigate the importance
-of model parameter. 
+environment. 
 
-Although these tools provide various approaches to perform SA, they each
+There are several other R packages include SA tools and
+are freely available in the Comprehensive R Archive Network (CRAN). Although these tools provide various approaches to perform SA, they each
 individually have limitations for application to PK modeling. For
 example, the estimated index in SA is not robust when using the
 inadequate size of the sample number. However, there are no software
