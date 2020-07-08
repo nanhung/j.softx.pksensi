@@ -35,7 +35,7 @@ I have only a few minor comments.
 
 ```
 Word count
-Words in text: 2842
+Words in text: 2839
 Words in headers: 55
 Words outside text (captions, etc.): 75
 Number of headers: 18
@@ -50,12 +50,12 @@ Subcounts:
   598+3+0 (1/0/0/0) Section: Motivation and significance
   72+2+0 (1/0/0/0) Section: Software description
   39+1+0 (1/0/0/0) Subsection: Installation
-  402+3+0 (1/0/11/2) Subsection: Parameter matrix generation
+  401+3+0 (1/0/11/2) Subsection: Parameter matrix generation
   149+1+0 (1/0/0/0) Subsection: Modeling
   175+2+0 (1/0/0/0) Subsection: Uncertainty analysis
   122+2+0 (1/0/0/0) Subsection: Sensitivity analysis
   405+2+0 (1/0/3/0) Section: Illustrative Examples
-  529+3+0 (1/0/0/0) Section: Impact and conclusions
+  527+3+0 (1/0/0/0) Section: Impact and conclusions
   26+3+0 (1/0/0/0) Section: Conflict of Interest
   82+1+0 (1/0/0/0) Section: Acknowledgements
   0+4+0 (1/0/0/0) Section: Appendix A. Example code
